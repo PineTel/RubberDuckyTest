@@ -1,15 +1,27 @@
-$user = 'u460121-sub6'
-$server = 'u460121-sub6.your-storagebox.de'
-$port = 23
-$pw = 'PappagalloRosso11!'
-$src = 'C:\Users\ameri\Documents\Exfiltration'
+# --- vars ---
+$user='u460121-sub6'
+$server='u460121-sub6.your-storagebox.de'
+$port=23
+$pw='YourPlaintextPassword'
+$src='C:\Users\ameri\Documents\Exfiltration'
+# -------------
 
+# robust askpass: passes password via env var (handles %, &, !, " etc.)
 $ask = Join-Path $env:TEMP 'askpass.cmd'
-'@echo off' | Out-File $ask -Encoding ascii
-"echo $pw" | Add-Content $ask -Encoding ascii
+'@echo off' | Set-Content $ask -Encoding ascii
+'powershell -NoLogo -NoProfile -NonInteractive -Command "[Console]::Out.Write($env:ASKPASS_PASS)"' | Add-Content $ask -Encoding ascii
+
+$env:ASKPASS_PASS = $pw
 $env:SSH_ASKPASS = $ask
 $env:SSH_ASKPASS_REQUIRE = 'force'
 
-scp -v -P $port -r "$src" "${user}@${server}:"
+scp -vv -P $port -r `
+  -o PreferredAuthentications=password,keyboard-interactive `
+  -o PubkeyAuthentication=no `
+  -o NumberOfPasswordPrompts=1 `
+  -o StrictHostKeyChecking=accept-new `
+  "$src" "${user}@${server}:"
 
-Remove-Item $ask -Force
+# cleanup
+Remove-Item $ask -Force -ErrorAction SilentlyContinue
+$env:SSH_ASKPASS=$null; $env:SSH_ASKPASS_REQUIRE=$null; $env:ASKPASS_PASS=$null
