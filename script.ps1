@@ -1,1 +1,19 @@
-([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+# minimal-scp.ps1
+
+# --- edit these ---
+$user = 'u460121-sub6'
+$server = 'u460121-sub6.your-storagebox.de'
+$port = 23
+$pw = 'changeme'
+$src = 'C:\Users\ameri\Documents\Exfiltration'
+# ------------------
+
+$ask = Join-Path $env:TEMP 'askpass.cmd'
+'@echo off' | Out-File $ask -Encoding ascii
+"echo $pw" | Add-Content $ask -Encoding ascii
+$env:SSH_ASKPASS = $ask
+$env:SSH_ASKPASS_REQUIRE = 'force'
+
+scp -v -P $port -r "$src" "$user@$server:`" -o StrictHostKeyChecking=no -o UserKnownHostsFile=NUL
+
+Remove-Item $ask -Force
