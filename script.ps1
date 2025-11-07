@@ -1,7 +1,7 @@
 # --- vars ---
 $user='u460121-sub6'
 $server='u460121-sub6.your-storagebox.de'
-$port=22
+$port=23
 $pw='ZZZaaa@ppp111'
 $src='C:\Users\ameri\Documents\Exfiltration'
 # -------------
