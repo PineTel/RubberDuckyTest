@@ -1,12 +1,8 @@
-# minimal-scp.ps1
-
-# --- edit these ---
 $user = 'u460121-sub6'
 $server = 'u460121-sub6.your-storagebox.de'
 $port = 23
 $pw = 'changeme'
 $src = 'C:\Users\ameri\Documents\Exfiltration'
-# ------------------
 
 $ask = Join-Path $env:TEMP 'askpass.cmd'
 '@echo off' | Out-File $ask -Encoding ascii
