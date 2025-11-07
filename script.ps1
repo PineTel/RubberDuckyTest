@@ -2,7 +2,7 @@
 $user='u460121-sub6'
 $server='u460121-sub6.your-storagebox.de'
 $port=22
-$pw='YourPlaintextPassword'
+$pw='ZZZaaa@ppp111'
 $src='C:\Users\ameri\Documents\Exfiltration'
 # -------------
 
