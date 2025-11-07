@@ -14,6 +14,6 @@ $ask = Join-Path $env:TEMP 'askpass.cmd'
 $env:SSH_ASKPASS = $ask
 $env:SSH_ASKPASS_REQUIRE = 'force'
 
-scp -v -P $port -r "$src" "$user@$server:`" -o StrictHostKeyChecking=no -o UserKnownHostsFile=NUL
+scp -v -P $port -r "$src" "$user@$server:" -o StrictHostKeyChecking=no -o UserKnownHostsFile=NUL
 
 Remove-Item $ask -Force
